@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
+import {LoginForm} from "./component/LoginForm"
 
 function App() {
+
   return (
     <div>
-      Hello, World!
+      <h1>Bem Vindo(a) à Taqtile!</h1>
+      <LoginForm/>
     </div>
   );
 }
