@@ -1,24 +1,33 @@
+import { ApolloError, useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { loginGql } from "../services/loginRequest";
 
 
 export const LoginForm: React.FC = () => {
 
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [login] = useMutation(loginGql,{
+    onError: (error:ApolloError)=>{alert(error.message)},
+    onCompleted: (data)=> {
+      localStorage.setItem("token",data.login.token)
+    }
+  });
 
-  const handleLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin(event.target.value);
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
-
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   }; 
 
-  const signIn = (event: { preventDefault: () => void; }) => {
+  const signIn = async (event:React.FormEvent) => {
     event.preventDefault();
-    console.log("login:", login, "\npassword:", password);
-    //fazer as coisas depois
-    //cleanFields()
+    await login({variables: {email: email, password:password}})
+    if(localStorage.getItem("token")){
+      setEmail("")
+      setPassword("")
+    }
   };
 
   return (
@@ -27,8 +36,8 @@ export const LoginForm: React.FC = () => {
         <input
           type={"email"}
           name={"email"}
-          value={login}
-          onChange={handleLogin}
+          value={email}
+          onChange={handleEmail}
           placeholder="E-mail"
           required
           pattern="([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$)"
