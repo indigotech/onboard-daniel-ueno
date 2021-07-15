@@ -1,17 +1,24 @@
 import { ApolloError, useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { goToBlankPage } from "../routes/coordinator";
 import { loginGql } from "../services/loginRequest";
-
+import { History } from "history";
+import { useHistory } from "react-router-dom";
 
 export const LoginForm: React.FC = () => {
-
+  const history: History = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login] = useMutation(loginGql,{
-    onError: (error:ApolloError)=>{alert(error.message)},
-    onCompleted: (data)=> {
-      localStorage.setItem("token",data.login.token)
-    }
+  const [login] = useMutation(loginGql, {
+    onError: (error: ApolloError) => {
+      alert(error.message);
+    },
+    onCompleted: (data) => {
+      localStorage.setItem("token", data.login.token);
+      setEmail("");
+      setPassword("");
+      goToBlankPage(history);
+    },
   });
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,15 +26,11 @@ export const LoginForm: React.FC = () => {
   };
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-  }; 
+  };
 
-  const signIn = async (event:React.FormEvent) => {
+  const signIn = (event: React.FormEvent) => {
     event.preventDefault();
-    await login({variables: {email: email, password:password}})
-    if(localStorage.getItem("token")){
-      setEmail("")
-      setPassword("")
-    }
+    login({ variables: { email: email, password: password } });
   };
 
   return (
@@ -51,12 +54,12 @@ export const LoginForm: React.FC = () => {
           placeholder="password"
           required
           pattern="(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)"
-          title={"Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito"}
+          title={
+            "Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito"
+          }
         />
         <button>Entrar</button>
       </form>
     </div>
   );
 };
-
-
