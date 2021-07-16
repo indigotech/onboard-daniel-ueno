@@ -9,6 +9,7 @@ export const LoginForm: React.FC = () => {
   const history: History = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< HEAD
   const [login] = useMutation(loginGql, {
     onError: (error: ApolloError) => {
       alert(error.message);
@@ -18,6 +19,12 @@ export const LoginForm: React.FC = () => {
       setEmail("");
       setPassword("");
       goToBlankPage(history);
+=======
+  const [login, {loading: mutationLoading}] = useMutation(loginGql,{
+    onError: (error:ApolloError)=>{alert(error.message)},
+    onCompleted: (data)=> {
+      localStorage.setItem("token",data.login.token)
+>>>>>>> b2e1817 (feature/loading)
     },
   });
 
@@ -54,11 +61,16 @@ export const LoginForm: React.FC = () => {
           placeholder="password"
           required
           pattern="(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)"
+<<<<<<< HEAD
           title={
             "Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito"
           }
+=======
+          title={"Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito"}
+
+>>>>>>> b2e1817 (feature/loading)
         />
-        <button>Entrar</button>
+        <button disabled={mutationLoading}>{mutationLoading? "Carregando": "Entrar"}</button>
       </form>
     </div>
   );
