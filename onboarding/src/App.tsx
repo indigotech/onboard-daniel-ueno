@@ -1,12 +1,9 @@
-import React from 'react';
-import {LoginForm} from "./component/LoginForm"
+import Router from "./routes/Router";
 
 function App() {
-
   return (
     <div>
-      <h1>Bem Vindo(a) à Taqtile!</h1>
-      <LoginForm/>
+      <Router />
     </div>
   );
 }
