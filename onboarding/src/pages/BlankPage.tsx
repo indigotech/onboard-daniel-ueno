@@ -1,9 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function BlankPage() {
-    return (
-        <div>
-            Por enquanto, nada
-        </div>
-    )
+  return <div>Por enquanto, nada</div>;
 }
