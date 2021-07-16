@@ -1,30 +1,24 @@
-import { ApolloError, useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { goToBlankPage } from "../routes/coordinator";
-import { loginGql } from "../services/loginRequest";
-import { History } from "history";
-import { useHistory } from "react-router-dom";
+import { ApolloError, useMutation } from '@apollo/client';
+import { History } from 'history';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { goToBlankPage } from '../routes/coordinator';
+import { loginGql } from '../services/loginRequest';
 
 export const LoginForm: React.FC = () => {
   const history: History = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-<<<<<<< HEAD
-  const [login] = useMutation(loginGql, {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [login, { loading: mutationLoading }] = useMutation(loginGql, {
     onError: (error: ApolloError) => {
       alert(error.message);
     },
     onCompleted: (data) => {
-      localStorage.setItem("token", data.login.token);
-      setEmail("");
-      setPassword("");
+      localStorage.setItem('token', data.login.token);
+      setEmail('');
+      setPassword('');
       goToBlankPage(history);
-=======
-  const [login, {loading: mutationLoading}] = useMutation(loginGql,{
-    onError: (error:ApolloError)=>{alert(error.message)},
-    onCompleted: (data)=> {
-      localStorage.setItem("token",data.login.token)
->>>>>>> b2e1817 (feature/loading)
     },
   });
 
@@ -44,33 +38,26 @@ export const LoginForm: React.FC = () => {
     <div>
       <form onSubmit={signIn}>
         <input
-          type={"email"}
-          name={"email"}
+          type={'email'}
+          name={'email'}
           value={email}
           onChange={handleEmail}
-          placeholder="E-mail"
+          placeholder='E-mail'
           required
-          pattern="([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$)"
-          title={"O e-mail deve ser do tipo texto@texto.texto"}
+          pattern='([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$)'
+          title={'O e-mail deve ser do tipo texto@texto.texto'}
         />
         <input
-          type={"password"}
-          name={"password"}
+          type={'password'}
+          name={'password'}
           value={password}
           onChange={handlePassword}
-          placeholder="password"
+          placeholder='password'
           required
-          pattern="(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)"
-<<<<<<< HEAD
-          title={
-            "Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito"
-          }
-=======
-          title={"Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito"}
-
->>>>>>> b2e1817 (feature/loading)
+          pattern='(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)'
+          title={'Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito'}
         />
-        <button disabled={mutationLoading}>{mutationLoading? "Carregando": "Entrar"}</button>
+        <button disabled={mutationLoading}>{mutationLoading ? 'Carregando' : 'Entrar'}</button>
       </form>
     </div>
   );

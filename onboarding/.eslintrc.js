@@ -5,7 +5,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:import/warnings',
@@ -78,10 +77,20 @@ module.exports = {
       },
     ],
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/class-name-casing': [
+    '@typescript-eslint/naming-convention': [
       'error',
       {
-        allowUnderscorePrefix: true,
+        selector: 'default',
+        leadingUnderscore: 'allow',
+        format: ['camelCase'],
+      },
+    ],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'interface',
+        leadingUnderscore: 'forbid',
+        format: ['PascalCase'],
       },
     ],
     'no-useless-escape': 'off',
@@ -94,12 +103,6 @@ module.exports = {
     '@typescript-eslint/member-delimiter-style': 'error',
     '@typescript-eslint/type-annotation-spacing': 'off',
     'no-unexpected-multiline': 'off',
-    '@typescript-eslint/interface-name-prefix': [
-      'error',
-      {
-        prefixWithI: 'never',
-      },
-    ],
     '@typescript-eslint/member-ordering': 'error',
     '@typescript-eslint/no-empty-function': 'error',
     '@typescript-eslint/no-empty-interface': 'error',
