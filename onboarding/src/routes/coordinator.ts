@@ -1,9 +1,9 @@
 import { History } from 'history';
 
-export const goToLoginPage = (history: History) => {
+export const goToLoginPage = (history: History): void => {
   history.push('/');
 };
 
-export const goToBlankPage = (history: History) => {
-  history.push('/blank');
+export const goToUserList = (history: History): void => {
+  history.push('/userlist');
 };

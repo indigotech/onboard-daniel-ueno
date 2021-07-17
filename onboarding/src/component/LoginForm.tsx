@@ -2,7 +2,7 @@ import { ApolloError, useMutation } from '@apollo/client';
 import { History } from 'history';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { goToBlankPage } from '../routes/coordinator';
+import { goToUserList } from '../routes/coordinator';
 import { loginGql } from '../services/loginRequest';
 
 export const LoginForm: React.FC = () => {
@@ -18,7 +18,7 @@ export const LoginForm: React.FC = () => {
       localStorage.setItem('token', data.login.token);
       setEmail('');
       setPassword('');
-      goToBlankPage(history);
+      goToUserList(history);
     },
   });
 
