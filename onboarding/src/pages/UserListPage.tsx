@@ -1,20 +1,25 @@
+import { useQuery } from '@apollo/client';
 import React from 'react';
-interface User {
-  id: number;
-  username: string;
-  email: string;
-}
+import { userlistQuery } from '../services/userlistQuery';
+
 export const UserListPage: React.FC = () => {
-  const mockedUserList: User[] = [
-    { id: 1, username: 'daniel1', email: 'ueno2005@gmail.com' },
-    { id: 2, username: 'daniel2', email: 'ueno2006@gmail.com' },
-    { id: 3, username: 'daniel3', email: 'ueno2007@gmail.com' },
-  ];
-  const mappedUserlist = mockedUserList.map((user) => {
-    const { id, username, email } = user;
+  const token = localStorage.getItem('token');
+  const { data } = useQuery(userlistQuery, {
+    context: {
+      headers: {
+        Authorization: token,
+      },
+    },
+    variables: {
+      offset: 0,
+      limit: 10,
+    },
+  });
+  const mappedUserlist = data?.users?.nodes?.map((user: UserType) => {
+    const { id, name, email } = user;
     return (
       <p key={id}>
-        username: {username} | email: {email}
+        username: {name} | email: {email}
       </p>
     );
   });
@@ -25,3 +30,12 @@ export const UserListPage: React.FC = () => {
     </>
   );
 };
+
+interface UserType {
+  id: number | string;
+  name: string;
+  phone: string;
+  birthDate: Date;
+  email: string;
+  role: 'admin' | 'user';
+}
