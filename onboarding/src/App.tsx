@@ -1,6 +1,5 @@
 import React from 'react';
-import Router from './routes/Router';
-
+import { Router } from './routes/Router';
 export const App: React.FC = () => {
   return (
     <div>

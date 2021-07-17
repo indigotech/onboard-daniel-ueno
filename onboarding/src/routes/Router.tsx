@@ -1,22 +1,23 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
+import { ErrorPage } from '../pages/ErrorPage';
+import { LoginPage } from '../pages/LoginPage';
+import { UserListPage } from '../pages/UserListPage';
 
-const Router = () => {
+export const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={'/'}>
           <LoginPage />
         </Route>
-        <Route exact path={'/blank'}>
-          <div>outra pagina</div>
+        <Route exact path={'/userlist'}>
+          <UserListPage />
         </Route>
         <Route>
-          <div>pagina de erro</div>
+          <ErrorPage />
         </Route>
       </Switch>
     </BrowserRouter>
   );
 };
-export default Router;

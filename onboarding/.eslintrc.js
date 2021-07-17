@@ -167,6 +167,12 @@ module.exports = {
         'newlines-between': 'never',
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   settings: {
     react: {
