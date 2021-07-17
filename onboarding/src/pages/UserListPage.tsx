@@ -1,31 +1,32 @@
-import { useQuery } from '@apollo/client';
 import React from 'react';
-import { userlistQuery } from '../services/userlistQuery';
+import { useHistory, useParams } from 'react-router-dom';
+import { useGetUsers } from '../hooks/useGetUsers';
+import { nextPage, previousPage } from '../routes/coordinator';
 
 export const UserListPage: React.FC = () => {
-  const token = localStorage.getItem('token');
-  const { data } = useQuery(userlistQuery, {
-    context: {
-      headers: {
-        Authorization: token,
-      },
-    },
-    variables: {
-      offset: 0,
-      limit: 10,
-    },
-  });
+  const history = useHistory();
+  const params: { offset: string | undefined } = useParams();
+  let offset = 0;
+  if (!isNaN(Number(params.offset))) {
+    offset = Number(params.offset);
+  }
+  const data = useGetUsers(offset);
   const mappedUserlist = data?.users?.nodes?.map((user: UserType) => {
     const { id, name, email } = user;
-    return (
-      <p key={id}>
-        username: {name} | email: {email}
-      </p>
-    );
+    return <p key={id}>{`Nome de usuário: ${name} | e-mail: ${email}`}</p>;
   });
+
   return (
     <>
-      <div>UserListPage</div>
+      <div>Lista de Usuários</div>
+      <div>
+        {data?.users?.pageInfo?.hasPreviousPage && (
+          <button onClick={() => previousPage(history, offset)}>Página Anterior</button>
+        )}
+        {data?.users?.pageInfo?.hasNextPage && (
+          <button onClick={() => nextPage(history, offset)}>Próxima Página</button>
+        )}
+      </div>
       <div>{mappedUserlist}</div>
     </>
   );

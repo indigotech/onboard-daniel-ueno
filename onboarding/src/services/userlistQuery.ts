@@ -11,7 +11,6 @@ export const userlistQuery = gql`
         email
         role
       }
-      count
       pageInfo {
         offset
         limit

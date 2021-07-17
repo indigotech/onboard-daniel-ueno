@@ -11,7 +11,7 @@ export const Router: React.FC = () => {
         <Route exact path={'/'}>
           <LoginPage />
         </Route>
-        <Route exact path={'/userlist'}>
+        <Route exact path={'/user-list/:offset'}>
           <UserListPage />
         </Route>
         <Route>
