@@ -1,7 +1,10 @@
+import { ApolloError, useMutation } from '@apollo/client';
 import React from 'react';
 import { useForm } from '../hooks/useForm';
+import { createUserGql } from '../services/createUser';
 
 export const CreateUserForm: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [form, onChange, clear] = useForm({
     name: '',
     email: '',
@@ -10,9 +13,35 @@ export const CreateUserForm: React.FC = () => {
     role: '',
     birthDate: '',
   });
+
+  const [createUser, { loading }] = useMutation(createUserGql, {
+    context: {
+      headers: {
+        Authorization: token,
+      },
+    },
+    onError: (error: ApolloError) => {
+      alert(error.message);
+    },
+    onCompleted: () => {
+      clear();
+    },
+  });
+
   const onSubmitForm = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    clear();
+    createUser({
+      variables: {
+        data: {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          birthDate: form.birthDate,
+          password: form.password,
+          role: form.role,
+        },
+      },
+    });
     // createUser(form, clear);
   };
   const today = new Date().toISOString().split('T')[0];
@@ -46,7 +75,7 @@ export const CreateUserForm: React.FC = () => {
           onChange={onChange}
           placeholder='Telefone'
           required
-          pattern='(\d.{8,}$)'
+          pattern='(\d.{7,})'
           title={'telefone deve ter pelo menos 8 dígitos'}
         />
         <input
@@ -77,7 +106,7 @@ export const CreateUserForm: React.FC = () => {
           pattern='(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)'
           title={'Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito'}
         />
-        <button>Criar Usuário</button>
+        <button disabled={loading}>Criar Usuário</button>
       </form>
     </>
   );

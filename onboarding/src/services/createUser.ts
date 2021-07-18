@@ -1,28 +1,21 @@
 import { gql } from '@apollo/client';
 
-export const createUser = gql`
-  mutation createUser(
-    $name: String!
-    $email: String!
-    $phone: String!
-    $birthDate: Date!
-    $password: String
-    $role: UserRole!
-  ) {
-    createUser(
-      data: {
-        email: $email
-        password: $password
-        phone: $phone
-        birthDate: $birthDate
-        password: $password
-        role: $role
-      }
-    ) {
-      id
+export const createUserGql = gql`
+  mutation createUser($data: UserInputType!) {
+    createUser(data: $data) {
       name
-      email
+      id
+      phone
       role
     }
   }
 `;
+
+export interface UserInputType {
+  name: string;
+  email: string;
+  password: string;
+  birthDate: string;
+  role: 'user' | 'admin';
+  phone: string;
+}
