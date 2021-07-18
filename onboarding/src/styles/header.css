@@ -1,0 +1,11 @@
+/* Leo, não me xinga hahahaha, só o básico pra deixar no lugar, mas se for para estilizar mesmo aí eu coloco tudo certinho, com styled-components, flex e tudo mais xD */
+
+h1 {
+  text-align: center;
+  justify-self: center;
+}
+.button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}

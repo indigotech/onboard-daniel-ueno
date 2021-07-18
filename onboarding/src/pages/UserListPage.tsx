@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { Header } from '../component/Header';
 import { useGetUsers } from '../hooks/useGetUsers';
 import { nextPage, previousPage } from '../routes/coordinator';
 
@@ -18,7 +19,7 @@ export const UserListPage: React.FC = () => {
 
   return (
     <>
-      <div>Lista de Usuários</div>
+      <Header title={'Lista de Usuários'} />
       <div>
         {data?.users?.pageInfo?.hasPreviousPage && (
           <button onClick={() => previousPage(history, offset)}>Página Anterior</button>
