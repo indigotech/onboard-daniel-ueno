@@ -1,14 +1,11 @@
-import { ApolloError, useMutation } from '@apollo/client';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useCreateUsers } from '../hooks/useCreateUser';
 import { useForm } from '../hooks/useForm';
-import { goToUserList } from '../routes/coordinator';
-import { createUserGql } from '../services/createUser';
 
 export const CreateUserForm: React.FC = () => {
   const history = useHistory();
-  const token = localStorage.getItem('token');
-  const [form, onChange, clear] = useForm({
+  const [form, onChange] = useForm({
     name: '',
     email: '',
     password: '',
@@ -17,20 +14,7 @@ export const CreateUserForm: React.FC = () => {
     birthDate: '',
   });
 
-  const [createUser, { loading }] = useMutation(createUserGql, {
-    context: {
-      headers: {
-        Authorization: token,
-      },
-    },
-    onError: (error: ApolloError) => {
-      alert(error.message);
-    },
-    onCompleted: () => {
-      clear();
-      goToUserList(history);
-    },
-  });
+  const { createUser, loading } = useCreateUsers(history);
 
   const onSubmitForm = (event: { preventDefault: () => void }) => {
     event.preventDefault();
