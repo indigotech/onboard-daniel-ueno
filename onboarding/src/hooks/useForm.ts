@@ -15,7 +15,7 @@ export const useForm = (initialState: CreateUser): [CreateUser, (event: any) => 
   return [form, handleInputChange, clear];
 };
 
-interface CreateUser {
+export interface CreateUser {
   name: string;
   email: string;
   password: string;
