@@ -4,6 +4,7 @@ import { CreateUserPage } from '../pages/CreateUserPage';
 import { ErrorPage } from '../pages/ErrorPage';
 import { LoginPage } from '../pages/LoginPage';
 import { UserListPage } from '../pages/UserListPage';
+import { UserPage } from '../pages/UserPage';
 
 export const Router: React.FC = () => {
   return (
@@ -17,6 +18,9 @@ export const Router: React.FC = () => {
         </Route>
         <Route exact path={'/create-user'}>
           <CreateUserPage />
+        </Route>
+        <Route exact path={'/userpage/:id'}>
+          <UserPage />
         </Route>
         <Route>
           <ErrorPage />

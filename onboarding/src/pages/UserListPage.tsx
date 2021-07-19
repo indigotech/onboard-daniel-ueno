@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Header } from '../component/Header';
 import { useGetUsers } from '../hooks/useGetUsers';
-import { nextPage, previousPage } from '../routes/coordinator';
+import { goToUserPage, nextPage, previousPage } from '../routes/coordinator';
 
 export const UserListPage: React.FC = () => {
   const history = useHistory();
@@ -14,7 +14,12 @@ export const UserListPage: React.FC = () => {
   const data = useGetUsers(offset);
   const mappedUserlist = data?.users?.nodes?.map((user: UserType) => {
     const { id, name, email } = user;
-    return <p key={id}>{`Nome de usuário: ${name} | e-mail: ${email}`}</p>;
+    return (
+      <p
+        key={id}
+        onClick={() => goToUserPage(history, id as string)}
+      >{`Nome de usuário: ${name} | e-mail: ${email}`}</p>
+    );
   });
 
   return (
