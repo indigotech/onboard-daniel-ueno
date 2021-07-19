@@ -2,6 +2,17 @@ import { useQuery } from '@apollo/client';
 import { singleUserQuery } from '../services/usersQueries';
 
 export const useGetUserById = (idparams: string | undefined): { user: User } => {
+  const error = {
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      password: '',
+      phone: '',
+      role: '',
+      birthDate: '',
+    },
+  };
   const token = localStorage.getItem('token');
   const { data } = useQuery(singleUserQuery, {
     context: {
@@ -12,19 +23,11 @@ export const useGetUserById = (idparams: string | undefined): { user: User } => 
     variables: {
       id: idparams,
     },
+    onError: () => {
+      alert('Usuário não Encontrado');
+    },
   });
   if (!data) {
-    const error = {
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        password: '',
-        phone: '',
-        role: '',
-        birthDate: '',
-      },
-    };
     return error;
   }
   return data;

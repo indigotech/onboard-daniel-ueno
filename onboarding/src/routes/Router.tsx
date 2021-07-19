@@ -19,7 +19,7 @@ export const Router: React.FC = () => {
         <Route exact path={'/create-user'}>
           <CreateUserPage />
         </Route>
-        <Route exact path={'/user/:id'}>
+        <Route exact path={'/userpage/:id'}>
           <UserPage />
         </Route>
         <Route>

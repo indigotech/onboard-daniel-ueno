@@ -20,5 +20,5 @@ export const previousPage = (history: History, offset: number): void => {
 };
 
 export const goToUserPage = (history: History, idparams: string): void => {
-  history.push(`user/${idparams}`);
+  history.push(`/userpage/${idparams}`);
 };
