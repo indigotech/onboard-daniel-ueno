@@ -20,3 +20,15 @@ export const userlistQuery = gql`
     }
   }
 `;
+export const singleUserQuery = gql`
+  user($id: ID!) {
+  user(id: $id) {
+    id
+    email
+    name
+    phone
+    role
+    phone
+  }
+}
+`;
