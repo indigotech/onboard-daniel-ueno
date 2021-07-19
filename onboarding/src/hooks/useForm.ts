@@ -5,7 +5,7 @@ export const useForm = (initialState: CreateUser): [CreateUser, (event: any) => 
 
   const handleInputChange = (event: any) => {
     const { value, name } = event.target;
-    setForm({ ...form, [name]: value });
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
   const clear = () => {

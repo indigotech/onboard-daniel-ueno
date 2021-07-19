@@ -1,9 +1,12 @@
 import { ApolloError, useMutation } from '@apollo/client';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useForm } from '../hooks/useForm';
+import { goToUserList } from '../routes/coordinator';
 import { createUserGql } from '../services/createUser';
 
 export const CreateUserForm: React.FC = () => {
+  const history = useHistory();
   const token = localStorage.getItem('token');
   const [form, onChange, clear] = useForm({
     name: '',
@@ -25,6 +28,7 @@ export const CreateUserForm: React.FC = () => {
     },
     onCompleted: () => {
       clear();
+      goToUserList(history);
     },
   });
 
@@ -42,7 +46,6 @@ export const CreateUserForm: React.FC = () => {
         },
       },
     });
-    // createUser(form, clear);
   };
   const today = new Date().toISOString().split('T')[0];
   return (
