@@ -1,6 +1,10 @@
 import { useState } from 'react';
-
-export const useForm = (initialState: CreateUser): [CreateUser, (event: any) => void, () => void] => {
+interface FormResult {
+  form: CreateUser;
+  InputChage: (event: any) => void;
+  clear: () => void;
+}
+export const useForm = (initialState: CreateUser): FormResult => {
   const [form, setForm] = useState(initialState);
 
   const handleInputChange = (event: any) => {
@@ -12,7 +16,7 @@ export const useForm = (initialState: CreateUser): [CreateUser, (event: any) => 
     setForm(initialState);
   };
 
-  return [form, handleInputChange, clear];
+  return { form, handleInputChange, clear };
 };
 
 export interface CreateUser {

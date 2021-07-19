@@ -5,7 +5,7 @@ import { useForm } from '../hooks/useForm';
 
 export const CreateUserForm: React.FC = () => {
   const history = useHistory();
-  const [form, onChange] = useForm({
+  const { form, handleInputChange: onChange } = useForm({
     name: '',
     email: '',
     password: '',
