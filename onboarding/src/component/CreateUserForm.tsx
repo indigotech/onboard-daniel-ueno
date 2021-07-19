@@ -1,8 +1,11 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useCreateUsers } from '../hooks/useCreateUser';
 import { useForm } from '../hooks/useForm';
 
 export const CreateUserForm: React.FC = () => {
-  const [form, onChange, clear] = useForm({
+  const history = useHistory();
+  const [form, onChange] = useForm({
     name: '',
     email: '',
     password: '',
@@ -10,10 +13,16 @@ export const CreateUserForm: React.FC = () => {
     role: '',
     birthDate: '',
   });
+
+  const { createUser, loading } = useCreateUsers(history);
+
   const onSubmitForm = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    clear();
-    // createUser(form, clear);
+    createUser({
+      variables: {
+        data: form,
+      },
+    });
   };
   const today = new Date().toISOString().split('T')[0];
   return (
@@ -46,7 +55,7 @@ export const CreateUserForm: React.FC = () => {
           onChange={onChange}
           placeholder='Telefone'
           required
-          pattern='(\d.{8,}$)'
+          pattern='(\d.{7,})'
           title={'telefone deve ter pelo menos 8 dígitos'}
         />
         <input
@@ -77,7 +86,7 @@ export const CreateUserForm: React.FC = () => {
           pattern='(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)'
           title={'Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito'}
         />
-        <button>Criar Usuário</button>
+        <button disabled={loading}>Criar Usuário</button>
       </form>
     </>
   );
