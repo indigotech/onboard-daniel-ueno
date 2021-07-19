@@ -36,14 +36,7 @@ export const CreateUserForm: React.FC = () => {
     event.preventDefault();
     createUser({
       variables: {
-        data: {
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          birthDate: form.birthDate,
-          password: form.password,
-          role: form.role,
-        },
+        data: form,
       },
     });
   };
