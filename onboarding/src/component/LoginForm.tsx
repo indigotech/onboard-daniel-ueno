@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { goToUserList } from '../routes/coordinator';
 import { loginGql } from '../services/loginRequest';
-
+import { Button } from './Button';
+import { Input } from './Input';
+import { Label } from './Label';
 export const LoginForm: React.FC = () => {
   const history: History = useHistory();
   const [email, setEmail] = useState('');
@@ -37,7 +39,10 @@ export const LoginForm: React.FC = () => {
   return (
     <div>
       <form onSubmit={signIn}>
-        <input
+        <Label htmlFor={'email'}>email</Label>
+        <br />
+        <Input
+          id={'email'}
           type={'email'}
           name={'email'}
           value={email}
@@ -47,7 +52,11 @@ export const LoginForm: React.FC = () => {
           pattern='([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$)'
           title={'O e-mail deve ser do tipo texto@texto.texto'}
         />
-        <input
+        <br />
+        <Label htmlFor={'password'}>password</Label>
+        <br />
+        <Input
+          id={'password'}
           type={'password'}
           name={'password'}
           value={password}
@@ -57,7 +66,8 @@ export const LoginForm: React.FC = () => {
           pattern='(^(?=.*\d)(?=.*[a-zA-Z]).{8,}$)'
           title={'Sua senha deve ter no mínimo 8 caracteres, 1 letra e 1 dígito'}
         />
-        <button disabled={mutationLoading}>{mutationLoading ? 'Carregando' : 'Entrar'}</button>
+        <br />
+        <Button disabled={mutationLoading}>{mutationLoading ? 'Carregando' : 'Entrar'}</Button>
       </form>
     </div>
   );

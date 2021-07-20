@@ -1,7 +1,7 @@
 import { useState } from 'react';
 interface FormResult {
   form: CreateUser;
-  InputChage: (event: any) => void;
+  handleInputChange: (event: any) => void;
   clear: () => void;
 }
 export const useForm = (initialState: CreateUser): FormResult => {
